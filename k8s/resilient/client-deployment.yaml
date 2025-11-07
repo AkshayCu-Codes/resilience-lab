@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resilient-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resilient-client
+  template:
+    metadata:
+      labels:
+        app: resilient-client
+    spec:
+      containers:
+      - name: resilient-client
+        image: resilient-client
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env:
+        - name: BACKEND_URL
+          value: "http://resilient-backend:5000/account/123"

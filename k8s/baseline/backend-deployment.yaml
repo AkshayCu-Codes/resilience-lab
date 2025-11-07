@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: baseline-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: baseline-backend
+  template:
+    metadata:
+      labels:
+        app: baseline-backend
+    spec:
+      containers:
+      - name: baseline-backend
+        image: baseline-backend
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000

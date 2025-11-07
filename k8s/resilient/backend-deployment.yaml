@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resilient-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resilient-backend
+  template:
+    metadata:
+      labels:
+        app: resilient-backend
+    spec:
+      containers:
+      - name: resilient-backend
+        image: resilient-backend
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000

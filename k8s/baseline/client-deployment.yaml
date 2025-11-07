@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: baseline-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: baseline-client
+  template:
+    metadata:
+      labels:
+        app: baseline-client
+    spec:
+      containers:
+      - name: baseline-client
+        image: baseline-client
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env:
+        - name: BACKEND_URL
+          value: "http://baseline-backend:5000/account/123"

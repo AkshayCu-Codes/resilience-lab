@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: resilient-backend
+spec:
+  selector:
+    app: resilient-backend
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resilient-client
+spec:
+  selector:
+    app: resilient-client
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

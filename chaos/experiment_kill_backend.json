@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "title": "Kill Backend Pod to Test Resilience",
+  "description": "Simulates backend pod failure and verifies system recovery.",
+  "steady-state-hypothesis": {
+    "title": "Backend should be reachable and healthy before experiment",
+    "probes": [
+      {
+        "type": "probe",
+        "name": "backend-healthy",
+        "tolerance": 200,
+        "provider": {
+          "type": "http",
+          "timeout": 3,
+          "verify_tls": false,
+          "url": "http://127.0.0.1:54763/health"
+        }
+      }
+    ]
+  },
+  "method": [
+    {
+      "type": "action",
+      "name": "kill-backend",
+      "provider": {
+        "type": "process",
+        "path": "kubectl",
+        "arguments": "delete pod -l app=resilient-backend -n default"
+      }
+    }
+  ],
+  "rollbacks": [
+    {
+      "type": "action",
+      "name": "recover-backend",
+      "provider": {
+        "type": "process",
+        "path": "kubectl",
+        "arguments": "apply -f k8s/resilient/backend-deployment.yaml -n default"
+      }
+    }
+  ]
+}
